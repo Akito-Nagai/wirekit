@@ -1,24 +1,17 @@
-# README
+## Deploy
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+$ cp config/database.yml.sample config/database.yml
+$ bundle install --path vendor/bundle
+$ cd frontend
+$ npm install
+$ cd ..
+```
 
-Things you may want to cover:
+## Develop
 
-* Ruby version
+```
+$ bundle exec foreman start
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+http://localhost:5000/stream/index
