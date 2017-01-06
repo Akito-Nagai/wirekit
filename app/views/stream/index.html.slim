@@ -3,12 +3,20 @@
   .col-sm-8
     ul#chat-area
     = form_tag '/stream/message', remote: true do
-      = text_field_tag :comment
-      = submit_tag 'send'
+      .form-group
+        = text_area_tag :comment, nil, class: 'form-control'
+      button.btn.btn-primary type="submit" 送信
 
   .col-sm-4
     .card
       .card-block
+        ul
+          li
+            span.fa.fa-user>
+            | ユーザー
+          li
+            span.fa.fa-user>
+            | ユーザー
 
 javascript:
   var sse = new EventSource("/stream/stream");

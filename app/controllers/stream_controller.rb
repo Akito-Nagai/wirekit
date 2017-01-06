@@ -14,6 +14,8 @@ class StreamController < ApplicationController
     end
   rescue IOError
     logger.info 'Stream closed'
+  rescue ActionController::Live::ClientDisconnected
+    logger.info 'Client disconnected'
   ensure
     @@streams.delete(response.stream)
     response.stream.close
