@@ -2,7 +2,7 @@
 .#*
 *~
 .byebug_history
-.npm-debug.log
+npm-debug.log
 
 /.capistrano
 /.bundle
