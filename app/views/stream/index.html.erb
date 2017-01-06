@@ -1,0 +1,19 @@
+<!-- チャット表示部分 -->
+<ul id="chat_area">
+</ul>
+<!-- コメントフォーム -->
+<%# Ajaxリクエストで送信 %>
+<%= form_tag "/stream/message", :remote => true do %>
+  <%= text_field_tag :comment %>
+  <%= submit_tag "send" %>
+<% end %>
+<script>
+  // SSEの接続
+  var sse = new EventSource("/stream/stream");
+  // メッセージ受信時の処理
+  sse.onmessage = function(event) {
+    var message_li = document.createElement("li");
+    message_li.textContent = event.data;
+    document.getElementById("chat_area").appendChild(message_li);
+  };
+</script>

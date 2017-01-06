@@ -1,0 +1,90 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  DisabledByDefault: true
+  Rails:
+    Enabled: true
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    #- 'config/**/*'
+    - 'script/**/*'
+    - 'bundle_bin/*'
+    - 'bin/*'
+
+AsciiComments:
+  Enabled: false
+
+Style/AndOr:
+  Enabled: true
+
+Style/BracesAroundHashParameters:
+  Enabled: true
+
+Style/CaseIndentation:
+  Enabled: true
+
+Style/CommentIndentation:
+  Enabled: true
+
+Style/EmptyLines:
+  Enabled: true
+
+Style/HashSyntax:
+  Enabled: true
+
+Style/IndentationWidth:
+  Enabled: true
+
+Style/SpaceAfterColon:
+  Enabled: true
+
+Style/SpaceAfterComma:
+  Enabled: true
+
+Style/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+
+Style/SpaceAroundKeyword:
+  Enabled: true
+
+Style/SpaceAroundOperators:
+  Enabled: true
+
+Style/SpaceBeforeFirstArg:
+    Enabled: true
+
+Style/MethodDefParentheses:
+  Enabled: true
+
+Style/SpaceBeforeBlockBraces:
+  Enabled: true
+
+Style/SpaceInsideBlockBraces:
+  Enabled: true
+
+Style/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Style/SpaceInsideParens:
+  Enabled: true
+
+Style/Tab:
+  Enabled: true
+
+Style/TrailingBlankLines:
+  Enabled: true
+
+Style/TrailingWhitespace:
+  Enabled: true
+
+Style/UnneededPercentQ:
+  Enabled: true
+
+Lint/EndAlignment:
+  Enabled: true
+  AlignWith: variable
+
+Lint/RequireParentheses:
+  Enabled: true
