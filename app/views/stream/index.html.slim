@@ -1,0 +1,19 @@
+.row
+
+  .col-sm-8
+    ul#chat-area
+    = form_tag '/stream/message', remote: true do
+      = text_field_tag :comment
+      = submit_tag 'send'
+
+  .col-sm-4
+    .card
+      .card-block
+
+javascript:
+  var sse = new EventSource("/stream/stream");
+  sse.onmessage = function(event) {
+    var message_li = document.createElement("li");
+    message_li.textContent = event.data;
+    document.getElementById("chat-area").appendChild(message_li);
+  };

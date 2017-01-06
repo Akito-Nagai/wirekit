@@ -35,7 +35,7 @@ module.exports = [{
 
 {
   entry: {
-    application: './src/stylesheets/application.css.scss'
+    application: './src/stylesheets/application.scss'
   },
   output: {
     path:'../public/dist',
@@ -50,7 +50,11 @@ module.exports = [{
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
-      }
+      },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?mimetype=image/svg+xml' },
+      { test: /\.woff(\d+)?(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?mimetype=application/font-woff' },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?mimetype=application/font-woff' },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?mimetype=application/font-woff' }
     ]
   },
   plugins: [

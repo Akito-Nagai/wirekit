@@ -30,9 +30,15 @@ gem 'whenever'
 gem 'pg'
 gem 'redis-rails'
 gem 'sidekiq'
+gem 'paperclip'
+gem 'the_garage'
+gem 'garage-doorkeeper'
+gem 'letter_opener'
+gem 'letter_opener-iso-2022-jp'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -44,6 +50,13 @@ group :development do
   gem 'rack-mini-profiler'
   gem 'annotate'
   gem 'foreman'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
+  gem 'hirb-unicode'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

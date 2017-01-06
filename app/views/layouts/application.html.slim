@@ -1,9 +1,21 @@
 doctype html
 html
+
   head
+    meta charset="utf-8"
     title = Wirekit
-    = csrf_meta_tags
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+    meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"
     = stylesheet_link_tag webpack_path('application.css'), media: 'all'
-    = javascript_include_tag webpack_path('application.js')
+    = csrf_meta_tags
+
   body
-    = yield
+    nav.navbar.navbar-light.bg-faded
+      .container
+        a.navbar-brand href="#"
+          span.fa.fa-comments>
+          | Wirekit
+    .container
+      = yield
+
+    = javascript_include_tag webpack_path('application.js')
