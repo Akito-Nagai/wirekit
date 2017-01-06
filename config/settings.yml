@@ -1,0 +1,12 @@
+database:
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+  database: db/development.sqlite3
+
+redis:
+  endpoint: redis://localhost:6379/0/wirekit
+
+smtp:
+  address: localhost
+  port: 25

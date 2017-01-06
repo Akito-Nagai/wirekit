@@ -1,30 +1,26 @@
 class StreamController < ApplicationController
   include ActionController::Live
-  @@streams ||= []
 
   def index
   end
 
   def stream
     response.headers['Content-Type'] = 'text/event-stream'
-    @@streams.push(response.stream)
-    loop do
-      response.stream.write(":ping \n\n")
-      sleep 15
+    redis = Redis.new
+    redis.subscribe('messages.create') do |on|
+      on.message do |event, data|
+        response.stream.write("data: #{data}\n\n")
+      end
     end
   rescue IOError
-    logger.info 'Stream closed'
-  rescue ActionController::Live::ClientDisconnected
-    logger.info 'Client disconnected'
+    logger.info "Stream closed"
   ensure
-    @@streams.delete(response.stream)
+    redis.quit
     response.stream.close
   end
 
   def message
-    @@streams.each do |stream|
-      stream.write("data: #{params[:comment]}\n\n") rescue nil
-    end
+    REDIS.publish('messages.create', params[:comment].to_json)
     render text: nil
   end
 
