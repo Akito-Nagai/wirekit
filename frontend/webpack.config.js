@@ -2,7 +2,8 @@ var webpack = require("webpack");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
-filename = process.env.NODE_ENV === 'production' ? '[name]-[hash]' : '[name]'
+var filename = '[name]-[hash]'
+if (process.env.NODE_ENV === 'production') { filename = '[name]'; }
 
 module.exports = [{
 
@@ -46,8 +47,7 @@ module.exports = [{
       {
         test: /\.(gif|png|jpg|woff2?|ttf|eot|svg)$/,
         loader: 'file'
-      },
-      {
+      }, {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       },
