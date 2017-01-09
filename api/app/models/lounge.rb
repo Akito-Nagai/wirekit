@@ -4,7 +4,6 @@
 #
 #  id                 :integer          not null, primary key
 #  uuid               :string           not null
-#  user_id            :integer          not null
 #  name               :string
 #  description        :text
 #  image_file_name    :string
@@ -16,18 +15,9 @@
 #
 
 class Lounge < ApplicationRecord
+  extend FriendlyId
+  friendly_id :uuid
 
-  include Garage::Representer
-  include Garage::Authorizable
-  property :id
-  property :uuid
-  property :name
-  property :description
-  property :created_at
-  property :updated_at
-  link(:self) { v1_lounge_url(self.id) }
-
-  belongs_to :user
   has_many :attendees, dependent: :destroy
   has_many :channels, dependent: :destroy
 
@@ -45,16 +35,6 @@ class Lounge < ApplicationRecord
 
   before_create -> do
     self.uuid = SecureRandom.uuid
-  end
-
-  # Permissins for API (:index)
-  def self.build_permissions(perms, _other, _target)
-    perms.permits! :read
-  end
-
-  # Permissins for API (:show, :create, :update, :destroy)
-  def build_permissions(perms, _other)
-    perms.permits! :read
   end
 
   # 入室させる

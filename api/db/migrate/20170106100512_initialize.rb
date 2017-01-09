@@ -1,88 +1,6 @@
 class Initialize < ActiveRecord::Migration[5.0]
   def change
 
-    create_table :users, comment: 'ユーザーマスタ' do |t|
-      t.string :nick_name, null: false, default: '', comment: 'ニックネーム'
-
-      ## Database authenticatable
-      t.string :email,              null: false, default: '', comment: 'メールアドレス'
-      t.string :encrypted_password, null: false, default: '', comment: 'パスワード(ハッシュ値)'
-
-      ## Recoverable
-      t.string   :reset_password_token,   comment: 'パスワードリセットトークン'
-      t.datetime :reset_password_sent_at, comment: 'パスワードリセット要求日時'
-
-      ## Rememberable
-      t.datetime :remember_created_at, comment: '次回自動指定でのログイン日時'
-
-      ## Trackable
-      t.integer  :sign_in_count,      default: 0, null: false, comment: 'ログイン回数'
-      t.datetime :current_sign_in_at, comment: '今回ログイン日時'
-      t.datetime :last_sign_in_at,    comment: '前回ログイン日時'
-      t.string   :current_sign_in_ip, comment: '今回アクセス元IP'
-      t.string   :last_sign_in_ip,    comment: '前回アクセス元IP'
-
-      ## Confirmable
-      t.string   :confirmation_token,   comment: '登録確認トークン'
-      t.datetime :confirmed_at,         comment: '登録確認済み日時'
-      t.datetime :confirmation_sent_at, comment: '登録確認要求日時'
-      t.string   :unconfirmed_email,    comment: '未確認メールアドレス' # Only if using reconfirmable
-
-      ## Lockable
-      t.integer  :failed_attempts,  default: 0, null: false, comment: '認証失敗回数' # Only if lock strategy is :failed_attempts
-      t.string   :unlock_token,     comment: 'アカウントロック解除トークン' # Only if unlock strategy is :email or :both
-      t.datetime :locked_at,        comment: 'アカウントロック日時'
-
-      ## t.attachment :image
-      t.string   :image_file_name,    comment: '画像ファイル名'
-      t.string   :image_content_type, comment: '画像MIMEタイプ'
-      t.integer  :image_file_size,    comment: '画像ファイルサイズ'
-      t.datetime :image_updated_at,   comment: '画像更新日時'
-
-      t.text     :bio,    comment: '自己紹介'
-      t.text     :note,   comment: 'メモ'
-
-      t.datetime :created_at, null: false, comment: '作成日時'
-      t.datetime :updated_at, null: false, comment: '更新日時'
-    end
-    add_index :users, :email
-    add_index :users, :reset_password_token,        unique: true
-    add_index :users, :confirmation_token,          unique: true
-    add_index :users, :unlock_token,                unique: true
-    add_index :users, :created_at
-    add_index :users, :updated_at
-
-    create_table :roles, comment: 'ロールマスタ' do |t|
-      t.string    :code,        null: false, comment: 'コード'
-      t.string    :name,        null: false, default: '', comment: '名称'
-      t.text      :policy,      null: false, default: '', comment: 'ポリシー'
-      t.text      :description, null: false, default: '', comment: '説明'
-      t.integer   :sort,        comment: '並び順'
-      t.datetime :created_at,   null: false, comment: '作成日時'
-      t.datetime :updated_at,   null: false, comment: '更新日時'
-    end
-    add_index :roles, :code, unique: true
-    add_index :roles, :created_at
-    add_index :roles, :updated_at
-
-    create_table :users_roles, comment: 'ユーザー：ロール' do |t|
-      t.integer :user_id, null: false, comment: 'ユーザーID'
-      t.integer :role_id, null: false, comment: 'ロールID'
-    end
-    add_index :users_roles, [:user_id, :role_id], unique: true
-    add_foreign_key :users_roles, :users
-    add_foreign_key :users_roles, :roles
-
-    create_table :sessions, comment: 'セッションデータ' do |t|
-      t.string    :session_id,          comment: 'セッションID', null: false
-      t.text      :data,                comment: 'データ'
-      t.datetime  :created_at,          comment: '作成日時', null: false
-      t.datetime  :updated_at,          comment: '更新日時', null: false
-    end
-    add_index :sessions, :session_id, unique: true
-    add_index :sessions, :created_at
-    add_index :sessions, :updated_at
-
     create_table :oauth_applications, comment: 'OAuthアプリケーション' do |t|
 #      t.integer   :user_id,             comment: 'ユーザーID', null: false
       t.string    :name,                comment: '名称', null: false
@@ -125,7 +43,6 @@ class Initialize < ActiveRecord::Migration[5.0]
 
     create_table :lounges, comment: 'ラウンジ' do |t|
       t.string    :uuid,                comment: 'UUID', null: false
-      t.integer   :user_id,             comment: 'ユーザーID', null: false
       t.string    :name,                comment: '名称'
       t.text      :description,         comment: '説明'
       t.string    :image_file_name,     comment: '画像ファイル名'
@@ -136,7 +53,6 @@ class Initialize < ActiveRecord::Migration[5.0]
       t.datetime  :updated_at,          comment: '更新日時', null: false
     end
     add_index :lounges, :uuid, unique: true
-    add_index :lounges, [:user_id, :name], unique: true
     add_index :lounges, :created_at
     add_foreign_key :lounges, :users
 
@@ -183,7 +99,7 @@ class Initialize < ActiveRecord::Migration[5.0]
     create_table :channel_attendees, comment: 'チャンネル参加者' do |t|
       t.string    :uuid,                comment: 'UUID', null: false
       t.integer   :channel_id,          comment: 'チャンネルID', null: false
-      t.integer   :attendee_id,         comment: '参加者ID', null: false
+      t.integer   :attendee_id,         comment: 'ラウンジ参加者ID', null: false
       t.datetime  :created_at,          comment: '作成日時', null: false
     end
     add_index :channel_attendees, :uuid, unique: true
@@ -193,6 +109,7 @@ class Initialize < ActiveRecord::Migration[5.0]
     add_foreign_key :channel_attendees, :attendees
 
     create_table :messages, comment: 'メッセージ' do |t|
+      t.string    :uuid,                comment: 'UUID', null: false
       t.integer   :channel_id,          comment: 'チャンネルID', null: false
       t.integer   :channel_attendee_id, comment: 'チャンネル参加者ID', null: false
       t.text      :body,                comment: '内容'
@@ -201,6 +118,7 @@ class Initialize < ActiveRecord::Migration[5.0]
       t.datetime  :deleted_at,          comment: '削除日時', null: false
       t.datetime  :edited_at,           comment: '変更日時', null: false
     end
+    add_index :messages, :uuid, unique: true
     add_index :messages, :channel_id
     add_index :messages, :channel_attendee_id
     add_foreign_key :messages, :channels

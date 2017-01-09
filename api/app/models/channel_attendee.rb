@@ -10,6 +10,8 @@
 #
 
 class ChannelAttendee < ApplicationRecord
+  extend FriendlyId
+  friendly_id :uuid
 
   belongs_to :channel, touch: true
   belongs_to :attendee
