@@ -18,7 +18,7 @@ RSpec.describe 'channels', type: :request do
       FactoryGirl.create(:channel)
       get "/v1/lounges"
       lounge = JSON(response.body).first
-      get "/v1/lounges/#{lounge['id']}/channels"
+      get lounge['_links']['channels']['href']
       expect(response).to have_http_status(200)
       data = JSON(response.body)
       expect(data).to be_an_instance_of(Array)
