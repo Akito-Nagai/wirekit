@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'lounges', type: :request do
+RSpec.describe 'channels', type: :request do
 
-  let(:lounge_structure) do
+  let(:channel_structure) do
     {
       'id' => a_kind_of(String),
       'name' => a_kind_of(String),
@@ -13,14 +13,16 @@ RSpec.describe 'lounges', type: :request do
     }
   end
 
-  describe 'GET /v1/lounges' do
-    it 'ラウンジ一覧を取得', autodoc: true do
-      FactoryGirl.create(:lounge)
+  describe 'GET /v1/lounges/:lounge_id/channels' do
+    it 'チャンネル一覧を取得', autodoc: true do
+      FactoryGirl.create(:channel)
       get "/v1/lounges"
+      lounge = JSON(response.body).first
+      get "/v1/lounges/#{lounge['id']}/channels"
       expect(response).to have_http_status(200)
       data = JSON(response.body)
       expect(data).to be_an_instance_of(Array)
-      expect(data.first).to match(lounge_structure)
+      expect(data.first).to match(channel_structure)
     end
   end
 
