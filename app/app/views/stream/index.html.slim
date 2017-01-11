@@ -2,7 +2,7 @@
 
   .col-sm-8
     ul#chat-area
-    = form_tag '/stream/message', remote: true do
+    = form_tag '/v1/message', remote: true do
       .form-group
         = text_area_tag :comment, nil, class: 'form-control'
       button.btn.btn-primary type="submit" 送信
@@ -19,7 +19,7 @@
             | ユーザー
 
 javascript:
-  var sse = new EventSource("/stream/stream");
+  var sse = new EventSource("/v1/stream");
   sse.onmessage = function(event) {
     var message_li = document.createElement("li");
     message_li.textContent = event.data;
