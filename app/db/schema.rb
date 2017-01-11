@@ -62,7 +62,6 @@ ActiveRecord::Schema.define(version: 20170106100512) do
 
   create_table "lounges", force: :cascade do |t|
     t.string   "uuid",               null: false
-    t.integer  "user_id",            null: false
     t.string   "name"
     t.text     "description"
     t.string   "image_file_name"
@@ -72,7 +71,6 @@ ActiveRecord::Schema.define(version: 20170106100512) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["created_at"], name: "index_lounges_on_created_at"
-    t.index ["user_id", "name"], name: "index_lounges_on_user_id_and_name", unique: true
     t.index ["uuid"], name: "index_lounges_on_uuid", unique: true
   end
 
@@ -85,6 +83,7 @@ ActiveRecord::Schema.define(version: 20170106100512) do
   end
 
   create_table "messages", force: :cascade do |t|
+    t.string   "uuid",                null: false
     t.integer  "channel_id",          null: false
     t.integer  "channel_attendee_id", null: false
     t.text     "body"
@@ -94,6 +93,7 @@ ActiveRecord::Schema.define(version: 20170106100512) do
     t.datetime "edited_at",           null: false
     t.index ["channel_attendee_id"], name: "index_messages_on_channel_attendee_id"
     t.index ["channel_id"], name: "index_messages_on_channel_id"
+    t.index ["uuid"], name: "index_messages_on_uuid", unique: true
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|

@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 var filename = '[name]-[hash]'
-if (process.env.NODE_ENV === 'production') { filename = '[name]'; }
+if (process.env.NODE_ENV !== 'production') { filename = '[name]'; }
 
 module.exports = [{
 

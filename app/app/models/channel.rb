@@ -16,6 +16,8 @@
 #
 
 class Channel < ApplicationRecord
+  extend FriendlyId
+  friendly_id :uuid
 
   belongs_to :lounge
   has_many :messages, dependent: :destroy

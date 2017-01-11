@@ -11,8 +11,8 @@
 #  image_content_type :string
 #  image_file_size    :integer
 #  image_updated_at   :datetime
-#  level              :integer          default(0), not null
-#  status             :integer          default(1), not null
+#  level              :integer          default("0"), not null
+#  status             :integer          default("1"), not null
 #  remote_ip          :string
 #  user_agent         :text
 #  ext1               :text
@@ -23,23 +23,6 @@
 #
 
 class Attendee < ApplicationRecord
-
-  include Garage::Representer
-  include Garage::Authorizable
-  property :id
-  property :uuid
-  property :name
-  property :url
-  property :level
-  property :status
-  property :remote_ip
-  property :user_agent
-  property :ext1
-  property :ext2
-  property :ext3
-  property :created_at
-  property :updated_at
-  link(:self) { v1_lounge_url(self.id) }
 
   belongs_to :lounge
 

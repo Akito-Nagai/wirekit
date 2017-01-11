@@ -125,7 +125,6 @@ class Initialize < ActiveRecord::Migration[5.0]
 
     create_table :lounges, comment: 'ラウンジ' do |t|
       t.string    :uuid,                comment: 'UUID', null: false
-      t.integer   :user_id,             comment: 'ユーザーID', null: false
       t.string    :name,                comment: '名称'
       t.text      :description,         comment: '説明'
       t.string    :image_file_name,     comment: '画像ファイル名'
@@ -136,7 +135,6 @@ class Initialize < ActiveRecord::Migration[5.0]
       t.datetime  :updated_at,          comment: '更新日時', null: false
     end
     add_index :lounges, :uuid, unique: true
-    add_index :lounges, [:user_id, :name], unique: true
     add_index :lounges, :created_at
     add_foreign_key :lounges, :users
 
@@ -193,6 +191,7 @@ class Initialize < ActiveRecord::Migration[5.0]
     add_foreign_key :channel_attendees, :attendees
 
     create_table :messages, comment: 'メッセージ' do |t|
+      t.string    :uuid,                comment: 'UUID', null: false
       t.integer   :channel_id,          comment: 'チャンネルID', null: false
       t.integer   :channel_attendee_id, comment: 'チャンネル参加者ID', null: false
       t.text      :body,                comment: '内容'
@@ -201,6 +200,7 @@ class Initialize < ActiveRecord::Migration[5.0]
       t.datetime  :deleted_at,          comment: '削除日時', null: false
       t.datetime  :edited_at,           comment: '変更日時', null: false
     end
+    add_index :messages, :uuid, unique: true
     add_index :messages, :channel_id
     add_index :messages, :channel_attendee_id
     add_foreign_key :messages, :channels

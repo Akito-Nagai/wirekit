@@ -27,6 +27,5 @@ if admin_role.users.empty?
 end
 
 Lounge.find_or_create_by(name: 'default') do |r|
-  r.user = admin_user
   r.name = 'default'
 end
