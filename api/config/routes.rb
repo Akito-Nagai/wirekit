@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   scope module: :api, format: 'json' do
     namespace :v1 do
-      get 'stream' => 'stream#index'
+      get 'stream' => 'stream#stream'
       resources :lounges, module: :lounges, shallow: true do
         resources :attendees
         resources :channels, module: :channels do

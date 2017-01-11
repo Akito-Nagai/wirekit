@@ -1,5 +1,4 @@
-class StreamController < ApplicationController
-  include ActionController::Live
+class Api::V1::StreamController < ApplicationController
 
   def index
   end
@@ -7,21 +6,6 @@ class StreamController < ApplicationController
   def stream
     response.headers['Content-Type'] = 'text/event-stream'
     redis.subscribe('messages.create') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
-    end
-    redis.subscribe('global') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
-    end
-    redis.subscribe('lounge') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
-    end
-    redis.subscribe('channel') do |on|
       on.message do |event, data|
         response.stream.write("data: #{data}\n\n")
       end
@@ -39,7 +23,10 @@ class StreamController < ApplicationController
     render text: nil
   end
 
-  def knock
+  private
+
+  def redis
+    @redis ||= Redis.new(url: "#{Settings.redis.endpoint}/stream")
   end
 
 end
