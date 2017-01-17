@@ -1,4 +1,4 @@
-class Api::V1::Lounges::Channels::MessagesController < ApplicationController
+class Api::V1::Lounges::Channels::MessagesController < Api::V1::BaseController
 
   # GET /v1/channels/:channel_id/channel_messages
   def index

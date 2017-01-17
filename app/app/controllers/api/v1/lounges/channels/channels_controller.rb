@@ -1,4 +1,4 @@
-class Api::V1::Lounges::Channels::ChannelsController < ApplicationController
+class Api::V1::Lounges::Channels::ChannelsController < Api::V1::BaseController
 
   # GET /v1/lounges/:lounge_id/channels
   def index

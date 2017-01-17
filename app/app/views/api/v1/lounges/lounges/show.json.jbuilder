@@ -1,1 +1,1 @@
-json.partial! @lounge
+json.partial! @record

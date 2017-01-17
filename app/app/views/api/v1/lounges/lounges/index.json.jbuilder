@@ -1,3 +1,3 @@
-json.array! @lounges do |lounge|
-  json.partial! lounge
+json.array! @records do |record|
+  json.partial! record
 end
