@@ -24,6 +24,8 @@ gem 'pg'
 gem 'redis-rails'
 gem 'paperclip'
 gem 'friendly_id'
+gem 'faraday'
+gem 'faraday_middleware'
 
 group :development, :test do
   gem 'byebug', platform: :mri

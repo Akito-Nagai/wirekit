@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'stream#index'
 
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :lounges do
+  namespace :admin do
     resources :lounges, module: :lounges, shallow: true, only: [:index, :show, :create, :update, :destroy] do
       resources :attendees, only: [:index, :show, :create, :update, :destroy]
       resources :channels, module: :channels, only: [:index, :show, :create, :update, :destroy] do
