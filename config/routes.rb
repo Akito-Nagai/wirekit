@@ -17,4 +17,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :lounges do
+    resources :lounges, module: :lounges, shallow: true, only: [:index, :show, :create, :update, :destroy] do
+      resources :attendees, only: [:index, :show, :create, :update, :destroy]
+      resources :channels, module: :channels, only: [:index, :show, :create, :update, :destroy] do
+        resources :attendees, path: :channel_attendees, only: [:index, :show, :create, :update, :destroy]
+        resources :messages, only: [:index, :show, :create, :update, :destroy]
+      end
+    end
+  end
+
 end
