@@ -8,6 +8,7 @@ html
     meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"
     = stylesheet_link_tag webpack_path('application.css'), media: 'all'
     = csrf_meta_tags
+    = yield :head
 
   body
     nav.navbar.navbar-light.bg-faded
@@ -21,3 +22,4 @@ html
       = yield
 
     = javascript_include_tag webpack_path('application.js')
+    = yield :foot

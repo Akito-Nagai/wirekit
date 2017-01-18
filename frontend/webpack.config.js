@@ -8,7 +8,8 @@ if (process.env.NODE_ENV !== 'production') { filename = '[name]'; }
 module.exports = [{
 
   entry: {
-    application: './src/javascripts/application.js'
+    application: './src/javascripts/application.js',
+    lounge: './src/javascripts/lounges.js'
   },
   output: {
     path:'../public/dist',
@@ -21,7 +22,7 @@ module.exports = [{
         exclude: /node_modules/,
         loader: 'babel',
         query:{
-          presets: ['es2016']
+          presets: ['es2015', 'es2016']
         }
       }
     ]

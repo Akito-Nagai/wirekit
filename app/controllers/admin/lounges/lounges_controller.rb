@@ -2,11 +2,23 @@ class Admin::Lounges::LoungesController < ApplicationController
 
   def index
     @title = 'Lounges'
+  end
+
+  def show
+    res = backend.get("/v1/lounges/#{params[:id]}")
+    @lounge = res.body
+    @title = @lounge[:name]
+    res = backend.get(@lounge[:_links][:channels][:href])
+    @channels = res.body
+  end
+
+  def index_
+    @title = 'Lounges'
     res = backend.get("/v1/lounges")
     @lounges = res.body
   end
 
-  def show
+  def show_
     res = backend.get("/v1/lounges/#{params[:id]}")
     @lounge = res.body
     @title = @lounge[:name]

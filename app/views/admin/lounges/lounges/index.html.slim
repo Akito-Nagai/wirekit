@@ -1,8 +1,3 @@
-.row
-  - @lounges.each do |lounge|
-    .col-sm-3
-      .card
-        .card-block
-          h4.card-title = lounge[:name]
-          p.card-text = lounge[:description]
-          a.card-link href=admin_lounge_path(lounge[:id]) Go
+- content_for :foot
+  = javascript_include_tag webpack_path('lounge.js'), async: 'async'
+| ok

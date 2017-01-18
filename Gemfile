@@ -26,6 +26,7 @@ gem 'paperclip'
 gem 'friendly_id'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'doorkeeper'
 
 group :development, :test do
   gem 'byebug', platform: :mri

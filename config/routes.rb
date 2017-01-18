@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
+
   root 'stream#index'
 
   scope module: :api, format: 'json' do
