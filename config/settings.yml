@@ -1,5 +1,5 @@
-wireware_api:
-  endpoint: http://localhost:5000/v1
+backend:
+  endpoint: http://localhost:5000
 
 redis:
   endpoint: redis://localhost:6379/0/wirekit

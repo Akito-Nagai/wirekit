@@ -16,6 +16,8 @@ html
           span.fa.fa-comments>
           | Wireware
     .container
+      - if @title.present?
+        h1 = @title
       = yield
 
     = javascript_include_tag webpack_path('application.js')
