@@ -1,37 +1,49 @@
-var webpack = require("webpack");
+var webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
-var filename = '[name]-[hash]'
+var filename = '[name]-[hash]';
 if (process.env.NODE_ENV !== 'production') { filename = '[name]'; }
 
 module.exports = [{
 
   entry: {
     application: './src/javascripts/application.js',
-    lounge: './src/javascripts/lounges.js'
+    lounges: './src/javascripts/lounges.js'
   },
   output: {
     path:'../public/dist',
     filename: filename + '.js',
   },
   module: {
+    preLoaders: [
+       {
+          test: /\.tag$/,
+          exclude: /node_modules/,
+          loader: 'riotjs-loader'
+       }
+    ],
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.(js|tag)$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query:{
-          presets: ['es2015', 'es2016', 'es2017']
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015-riot', 'es2015', 'es2016', 'es2017']
         }
       }
     ]
   },
+  resolve: {
+     extensions: ['', '.js', '.tag']
+  },
   plugins: [
+    new ManifestPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.ProvidePlugin({ riot: 'riot' }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
-    new ManifestPlugin()
+    })
   ]
 },
 
@@ -49,7 +61,7 @@ module.exports = [{
         test: /\.(gif|png|jpg|woff2?|ttf|eot|svg)$/,
         loader: 'file'
       }, {
-        test: /\.scss$/,
+        test: /\.(scss|sass)$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?mimetype=image/svg+xml' },
@@ -59,11 +71,11 @@ module.exports = [{
     ]
   },
   plugins: [
+    new ManifestPlugin(),
+    new ExtractTextPlugin(filename + '.css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
-    new ExtractTextPlugin(filename + '.css'),
-    new ManifestPlugin()
+    })
   ]
 
 }]
