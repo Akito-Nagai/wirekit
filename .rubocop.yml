@@ -1,7 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.4
   DisabledByDefault: true
-  RunRailsCops: true
   DisplayCopNames: true
   Rails:
     Enabled: true

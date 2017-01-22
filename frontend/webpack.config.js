@@ -17,11 +17,14 @@ module.exports = [{
   },
   module: {
     preLoaders: [
-       {
-          test: /\.tag$/,
-          exclude: /node_modules/,
-          loader: 'riotjs-loader'
-       }
+      {
+        test: /\.tag$/,
+        exclude: /node_modules/,
+        loader: 'riotjs-loader',
+        query: {
+          //type: 'babel'
+        }
+      }
     ],
     loaders: [
       {
@@ -29,7 +32,8 @@ module.exports = [{
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015-riot', 'es2015', 'es2016', 'es2017']
+          presets: ['es2015-riot', 'es2015', 'es2016', 'es2017'],
+          plugins: ['transform-runtime', 'transform-regenerator']
         }
       }
     ]

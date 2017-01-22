@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   scope module: :api, format: 'json' do
     namespace :v1 do
+      root 'root#index'
       get 'stream' => 'stream#stream'
       post 'message' => 'stream#message'
       resources :lounges, module: :lounges, shallow: true, only: [:index, :show, :create, :update, :destroy] do

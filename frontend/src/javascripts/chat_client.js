@@ -1,8 +1,7 @@
 import Cache from './cache';
 
 export const appConfig = {
-  baseUrl: 'https://example.com',
-  apiEndPoint: 'https://example.com',
+  apiEndPoint: 'http://localhost:5000',
   apiId: '',
   apiSecret: ''
 }
@@ -25,7 +24,6 @@ export default class ChatClient {
     return absoluteUrl;
   }
 
-/*
   async send(method, url, params={}, headers={}) {
     let absoluteUrl = this.urlWithQuery(url, params);
     console.log(`${method} ${absoluteUrl}`);
@@ -56,9 +54,9 @@ export default class ChatClient {
   }
 
   async get(options={}) {
-    let accessToken = await this.getAccessToken();
+    //let accessToken = await this.getAccessToken();
     let headers = {
-      Authorization: 'Bearer ' + accessToken
+    //  Authorization: 'Bearer ' + accessToken
     }
     let cacheKey = this.urlWithQuery(options.url, options.params);
     let data = this.cache.read(cacheKey);
@@ -69,18 +67,21 @@ export default class ChatClient {
     return data;
   }
 
-  async getSite() {
-    let sites = await this.get({
-      url: appConfig.apiEndPoint + '/v1/sites',
+  async getRoot() {
+    let root = await this.get({
+      url: appConfig.apiEndPoint + '/v1',
       ttl: 600
     });
-    let site = null
-    sites.forEach(s => {
-      if (s.name === appConfig.site) {
-        site = s;
-      }
-    });
-    return site;
+    return root;
   }
-*/
+
+  async getLounges() {
+    let root = await this.getRoot();
+    let lounges = await this.get({
+      url: root._links.lounges.href,
+      ttl: 600
+    });
+    return lounges;
+  }
+
 }
