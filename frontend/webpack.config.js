@@ -9,7 +9,9 @@ module.exports = [{
 
   entry: {
     application: './src/javascripts/application.js',
-    lounges: './src/javascripts/lounges.js'
+    stream: './src/javascripts/stream.js',
+    admin_lounges_index: './src/javascripts/admin_lounges_index.js',
+    admin_lounges_show: './src/javascripts/admin_lounges_show.js'
   },
   output: {
     path:'../public/dist',

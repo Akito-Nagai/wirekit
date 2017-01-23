@@ -23,6 +23,11 @@ class Api::V1::StreamController < ApplicationController
         response.stream.write("data: #{data}\n\n")
       end
     end
+    redis.subscribe('attendee') do |on|
+      on.message do |event, data|
+        response.stream.write("data: #{data}\n\n")
+      end
+    end
   rescue IOError
     logger.info 'Stream closed'
   rescue ActionController::Live::ClientDisconnected

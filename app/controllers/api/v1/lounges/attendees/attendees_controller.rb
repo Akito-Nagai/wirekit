@@ -10,4 +10,10 @@ class Api::V1::Lounges::Attendees::AttendeesController < Api::V1::BaseController
     @records = lounge.attendees
   end
 
+  # POST /v1/lounges/:lounge_id/lounge_attendees
+  def create
+    #super
+    redis.publish('lounge', 'entered')
+  end
+
 end

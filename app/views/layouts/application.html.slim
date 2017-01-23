@@ -23,3 +23,6 @@ html
       = yield
 
     = yield :foot
+
+    stream lounge=@lounge_uuid channel=@channel_uuid
+    = javascript_include_tag webpack_path('stream.js')
