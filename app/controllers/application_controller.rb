@@ -3,10 +3,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def redis
-    @redis ||= Redis.new(url: "#{Settings.redis.endpoint}/stream")
-  end
-
   def backend
     @backend ||= Faraday.new(url: Settings.backend.endpoint) do |faraday|
       faraday.request  :url_encoded

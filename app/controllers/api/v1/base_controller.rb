@@ -54,4 +54,8 @@ class Api::V1::BaseController < ActionController::Base
     raise NotImplementedError.new("You must implement #{self.class}##{__method__}")
   end
 
+  def publish(channel, data)
+    redis.publish('lounge', 'entered')
+  end
+
 end

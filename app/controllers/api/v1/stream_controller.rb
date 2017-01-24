@@ -1,47 +1,37 @@
 class Api::V1::StreamController < ApplicationController
   include ActionController::Live
 
+  before_action :close_db_connection
+
   def stream
+    logger.info 'Stream open'
     response.headers['Content-Type'] = 'text/event-stream'
-    redis.subscribe('messages.create') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
+    redis = Redis.new(url: "#{Settings.redis.endpoint}/stream")
+    sender = Thread.new do
+      logger.info 'Subscribe redis'
+      redis.subscribe(['messages.create', 'lounge']) do |on|
+        on.message do |event, data|
+          response.stream.write("data: #{data}\n\n")
+        end
       end
     end
-    redis.subscribe('global') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
+    loop do
+      response.stream.write(":ping\n\n")
+      sleep 10
     end
-    redis.subscribe('lounge') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
-    end
-    redis.subscribe('channel') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
-    end
-    redis.subscribe('attendee') do |on|
-      on.message do |event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
-    end
-  rescue IOError
-    logger.info 'Stream closed'
-  rescue ActionController::Live::ClientDisconnected
-    logger.info 'Client disconnected'
+  rescue IOError, ActionController::Live::ClientDisconnected
+    logger.info $!.to_s
   ensure
+    logger.info 'Stream closed'
+    sender.kill
+    redis.quit
     response.stream.close
   end
 
-  def message
-    redis.publish('messages.create', params[:comment].to_json)
-    render text: nil
-  end
+  private
 
-  def knock
+  def close_db_connection
+    ActiveRecord::Base.connection_pool.release_connection
   end
 
 end

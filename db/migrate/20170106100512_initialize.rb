@@ -1,4 +1,5 @@
 class Initialize < ActiveRecord::Migration[5.0]
+
   def change
 
     create_table :users, comment: 'ユーザーマスタ' do |t|
@@ -136,7 +137,6 @@ class Initialize < ActiveRecord::Migration[5.0]
     end
     add_index :lounges, :uuid, unique: true
     add_index :lounges, :created_at
-    add_foreign_key :lounges, :users
 
     create_table :channels, comment: 'チャンネル' do |t|
       t.string    :uuid,                comment: 'UUID', null: false
@@ -176,7 +176,7 @@ class Initialize < ActiveRecord::Migration[5.0]
     end
     add_index :attendees, :uuid, unique: true
     add_index :attendees, :lounge_id
-    add_foreign_key :attendees, :channels
+    add_foreign_key :attendees, :lounges
 
     create_table :channel_attendees, comment: 'チャンネル参加者' do |t|
       t.string    :uuid,                comment: 'UUID', null: false
@@ -217,4 +217,5 @@ class Initialize < ActiveRecord::Migration[5.0]
     add_foreign_key :message_attendees, :attendees
 
   end
+
 end
