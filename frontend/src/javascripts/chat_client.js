@@ -56,9 +56,13 @@ export class ChatClient extends RestClient {
   }
 
   async stream(options = {}) {
+    //if (options.lounge) {
+    //  let attendee = await this.enterLounge(options.lounge);
+    //}
     let root = await this.getRoot();
-    console.log(root._links.stream.href);
-    let sse = new EventSource(root._links.stream.href)
+    let url = this.urlWithQuery(root._links.stream.href,
+      { lounge: options.lounge, channel: options.channel });
+    let sse = new EventSource(url);
     sse.onmessage = function(event) {
       alert(event)
     }

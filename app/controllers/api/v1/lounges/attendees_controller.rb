@@ -1,4 +1,4 @@
-class Api::V1::Lounges::Attendees::AttendeesController < Api::V1::BaseController
+class Api::V1::Lounges::AttendeesController < Api::V1::BaseController
 
   def model
     Attendee
@@ -13,7 +13,7 @@ class Api::V1::Lounges::Attendees::AttendeesController < Api::V1::BaseController
   # POST /v1/lounges/:lounge_id/lounge_attendees
   def create
     #super
-    redis.publish('lounge', 'entered')
+    redis.publish('public', 'entered')
   end
 
 end

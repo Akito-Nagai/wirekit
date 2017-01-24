@@ -3,7 +3,7 @@
   <p>curretAttendeeId = { cuid }</p>
 
   <script>
-    opts.client.stream()
+    opts.client.stream({ lounge: opts.lounge, channel: opts.channel, attendee: opts.attendee })
     this.cuid = opts.client.getCurrentAttendeeId()
   </script>
 
