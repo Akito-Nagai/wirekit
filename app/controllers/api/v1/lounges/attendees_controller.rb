@@ -6,14 +6,16 @@ class Api::V1::Lounges::AttendeesController < Api::V1::BaseController
 
   # GET /v1/lounges/:lounge_id/lounge_attendees
   def index
-    lounge = Lounge.find_by(uuid: params[:id])
+    lounge = Lounge.find_by(uuid: params[:lounge_id])
     @records = lounge.attendees
   end
 
   # POST /v1/lounges/:lounge_id/lounge_attendees
   def create
-    #super
-    redis.publish('public', 'entered')
+    lounge = Lounge.find_by(uuid: params[:lounge_id])
+    @record = lounge.attendees.create!(request_data)
+    publish('public', type: 'entered')
+    render :show
   end
 
 end

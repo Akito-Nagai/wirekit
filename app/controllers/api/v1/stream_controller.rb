@@ -12,6 +12,7 @@ class Api::V1::StreamController < ApplicationController
       logger.info "Subscribe redis: #{listens.inspect}"
       redis.subscribe(listens) do |on|
         on.message do |event, data|
+          logger.info "Received message: #{data}"
           response.stream.write("data: #{data}\n\n")
         end
       end

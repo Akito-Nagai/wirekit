@@ -47,7 +47,11 @@ class Api::V1::BaseController < ActionController::Base
   end
 
   def request_data
-    @request_data ||= JSON.parse(request.body.read, symbolize_names: true)
+    unless @request_data
+      body = request.body.read
+      @request_data = body.present? ? JSON.parse(body, symbolize_names: true) : {}
+    end
+    @request_data
   end
 
   def model
@@ -55,7 +59,7 @@ class Api::V1::BaseController < ActionController::Base
   end
 
   def publish(channel, data)
-    redis.publish('lounge', 'entered')
+    redis.publish(channel, data)
   end
 
 end

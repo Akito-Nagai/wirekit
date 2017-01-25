@@ -40,7 +40,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
   gem 'bullet'
-  gem 'rack-mini-profiler'
+  #gem 'rack-mini-profiler'
   gem 'annotate'
   gem 'foreman'
   gem 'pry'

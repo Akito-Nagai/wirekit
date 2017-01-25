@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def webpack_path(path)
     if Rails.env.development?
-      return "/dist/#{path}"
+      return "/dist/#{path}?#{Time.now.to_i}"
     end
     host = Rails.application.config.action_controller.asset_host
     manifest = Rails.application.config.assets.webpack_manifest

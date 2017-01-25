@@ -1,6 +1,9 @@
 - content_for :foot
   = javascript_include_tag webpack_path('admin_lounges_show.js'), async: 'async'
 
+p
+  a href=admin_lounges_path Back
+
 attendees lounge=params[:id]
 
 channels lounge=params[:id]

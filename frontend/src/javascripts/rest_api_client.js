@@ -73,7 +73,7 @@ export default class RestApiClient {
 
   async post(options = {}) {
     let headers = await this.defaultRequestHeaders();
-    data = await this.send({
+    let data = await this.send({
       method: 'POST',
       url: options.url,
       params: options.params,

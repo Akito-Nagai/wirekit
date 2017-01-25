@@ -1,4 +1,4 @@
-import RestClient from './rest_api_client';
+import RestApiClient from './rest_api_client';
 import cookie from 'cookie/index.js';
 
 export const appConfig = {
@@ -7,7 +7,7 @@ export const appConfig = {
   apiSecret: ''
 }
 
-export class ChatClient extends RestClient {
+export class ChatClient extends RestApiClient {
 
   async getRoot() {
     let root = await this.get({
@@ -49,6 +49,7 @@ export class ChatClient extends RestClient {
     let attendee = await this.post({
       url: lounge._links.attendees.href
     });
+    document.cookie = cookie.serialize('cuid', attendee.id);
     return attendee;
   }
 
@@ -56,21 +57,21 @@ export class ChatClient extends RestClient {
   }
 
   async stream(options = {}) {
-    //if (options.lounge) {
-    //  let attendee = await this.enterLounge(options.lounge);
-    //}
+    if (options.lounge) {
+      let attendee = await this.enterLounge(options.lounge);
+    }
     let root = await this.getRoot();
     let url = this.urlWithQuery(root._links.stream.href,
       { lounge: options.lounge, channel: options.channel });
     let sse = new EventSource(url);
     sse.onmessage = function(event) {
-      alert(event)
+      console.log(event);
     }
   }
 
   getCurrentAttendeeId() {
     let cookieData = cookie.parse(document.cookie);
-    cookieData.cuid;
+    return cookieData.cuid;
   }
 
 }
