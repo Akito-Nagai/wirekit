@@ -9,6 +9,7 @@ class Api::V1::BaseController < ActionController::Base
 
   # GET /v1/{models}
   def index
+    publish('public', type: 'entered')
     @records = model.all
   end
 
