@@ -1,3 +1,4 @@
-import client from './chat_client';
-require('./lounges.tag');
-riot.mount('lounges', { client: client });
+import Vue from 'vue'
+
+let lounges = require('./lounges.vue')
+let app = new Vue(lounges).$mount('lounges')

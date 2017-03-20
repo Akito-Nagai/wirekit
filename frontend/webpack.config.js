@@ -26,6 +26,11 @@ module.exports = [{
         query: {
           //type: 'babel'
         }
+      },
+      {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        loader: 'vue'
       }
     ],
     loaders: [
@@ -39,6 +44,10 @@ module.exports = [{
         }
       }
     ]
+  },
+  babel: {
+    presets: ['es2015', 'es2016', 'es2017'],
+    plugins: ['transform-runtime']
   },
   resolve: {
      extensions: ['', '.js', '.tag']
